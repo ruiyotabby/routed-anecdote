@@ -1,14 +1,17 @@
 import { useState } from 'react'
+import {
+  Route, Link, Routes
+} from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
-    paddingRight: 5
+    paddingRight: 10
   }
   return (
     <div>
-      <a href='#' style={padding}>anecdotes</a>
-      <a href='#' style={padding}>create new</a>
-      <a href='#' style={padding}>about</a>
+      <Link to='' style={padding}>anecdotes</Link>
+      <Link to='new' style={padding}>create new</Link>
+      <Link to='about' style={padding}>about</Link>
     </div>
   )
 }
@@ -36,13 +39,19 @@ const About = () => (
   </div>
 )
 
-const Footer = () => (
-  <div>
-    Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.
+const Footer = () => {
+  const padding = {
+    padding: 10
+  }
 
-    See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js</a> for the source code.
-  </div>
-)
+  return (
+    <div style={padding}>
+      Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.
+
+      See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js</a> for the source code.
+    </div>
+  )
+}
 
 const CreateNew = (props) => {
   const [content, setContent] = useState('')
@@ -126,9 +135,11 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
+      <Routes>
+        <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/new' element={<CreateNew addNew={addNew} />} />
+      </Routes>
       <Footer />
     </div>
   )
